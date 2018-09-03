@@ -53,6 +53,9 @@ public class Queries {
 	}
 	
 	public static String getLiftsStates() {
+		/*String condition0 = "states.errorcode = 0 and (states.errortext is null or states.errortext = '')";
+		String condition1 = "states.errorcode > 0 and states.errortext is not null and states.errortext <> ''";
+		String condition2 = "(states.errorcode = 0 and states.errortext like 'Отсутствует связь с БЛ%') or (states.errorcode = -255 and states.errortext = '')";	// states.errorcode = -255 - "состояние не опрошено" или "не определено"
 		String query =
 			" select " +
 			"   states.idlift id, " +
@@ -60,20 +63,37 @@ public class Queries {
 			"   states.errorcode error_code, " +
 			"   states.errortext error_description, " +
 			"   case " +
-			"     when states.errorcode = 0 and (states.errortext is null or states.errortext = '') then 0 " +
-			"     when states.errorcode > 0 and (states.errortext is not null and states.errortext != '') then 1 " +
-			"     when states.errorcode = 0 and (states.errortext like 'Отсутствует связь с БЛ%') then 2 " +
+			"     when " + condition0 + " then 0 " +
+			"     when " + condition1 + " then 1 " +
+			"     when " + condition2 + " then 2 " +
 			"     else 3 " +
 			"   end state, " +
 			"   case " +
-			"     when states.errorcode = 0 and (states.errortext is null or states.errortext = '') then 'green' " +
-			"     when states.errorcode > 0 and (states.errortext is not null and states.errortext != '') then 'red' " +
-			"     when states.errorcode = 0 and (states.errortext like 'Отсутствует связь с БЛ%') then 'yellow' " +
+			"     when " + condition0 + " then 'green' " +
+			"     when " + condition1 + " then 'red' " +
+			"     when " + condition2 + " then 'yellow' " +
 			"     else 'grey' " +
 			"   end color " +
 			" from states " +
 			" join v_lifts on states.idlift = v_lifts.idlift " +
-			" order by states.idlift";
+			" order by states.idlift";*/
+		
+		String query =
+				" select " +
+				"   states.idlift id, " +
+				"   states.datestate \"timestamp\", " +
+				"   states.errorcode error_code, " +
+				"   states.errortext error_description, " +
+				"   states.state_id state, " +
+				"   case states.state_id " +
+				"     when 0 then 'green' " +
+				"     when 1 then 'red' " +
+				"     when 2 then 'yellow' " +
+				"     else 'grey' " +
+				"   end color " +
+				" from states " +
+				" join v_lifts on states.idlift = v_lifts.idlift " +
+				" order by states.idlift";
 
 		return execQuery(query, true);
 	}
@@ -84,7 +104,18 @@ public class Queries {
 			" v_lifts.idlift id, states.datestate \"timestamp\", states.errorcode, states.errortext " + 
 			" from states " + 
 			" join v_lifts on v_lifts.idlift = states.idlift " + 
-			" where states.errortext <> '' " + 
+			" where states.state_id = 1 " + 
+			" order by v_lifts.idlift";
+		return execQuery(query, true);
+	}
+	
+	public static String getLiftsProblemsStates() {
+		String query =
+			" select " + 
+			" v_lifts.idlift id, states.datestate \"timestamp\", states.errorcode, states.errortext " + 
+			" from states " + 
+			" join v_lifts on v_lifts.idlift = states.idlift " + 
+			" where states.state_id in (1,2,3) " + 
 			" order by v_lifts.idlift";
 		return execQuery(query, true);
 	}
@@ -118,6 +149,16 @@ public class Queries {
 			" where " +
 			"	idlift = " + String.valueOf(id) +
 			" order by dtevent desc ";
+		return execQuery(query, true);
+	}
+	
+	public static String getLiftsStatesAlert() {
+		String query =
+			" select idlift, datestate, errorcode, errortext " +
+			" from states_alert " +
+			" where " +
+			"	states_alert.removed = 0 " +
+			" order by idlift";
 		return execQuery(query, true);
 	}
 	

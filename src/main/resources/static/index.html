@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<link rel="shortcut icon" href="favicon.ico" />
+	<meta charset="UTF-8">
+	<title>Lift description</title>
+</head>
+
+<body>
+	<p>
+	<h2>Описание методов модуля диспетчиризации лифтов</h2>
+	<p></p>
+	<ul>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/lifts">http://sarov.us.to:9900/lift/lifts</a> - список лифтов и их данных: id, тип, адрес в диспетчерской, полный адрес, географические координаты<br></li>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/states">http://sarov.us.to:9900/lift/states</a> - состояния всех лифтов: id лифта, timestamp состояния, код ошибки, описания ошибки, состояние (0 - всё хорошо, зелёный; 1 - ошибка, красный; 2 - нет связи с лифтом, жёлтый; 3 - неизвестно, серый). Состояния лифтов обновляются примерно 1 раз в минуту.</li>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/states/errors">http://sarov.us.to:9900/lift/states/errors</a> - список лифтов с ошибками</li>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/states/problems">http://sarov.us.to:9900/lift/states/problems</a> - список лифтов с проблемами</li>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/events/22">http://sarov.us.to:9900/lift/events/{id}</a> - все события лифта с id = {id}. Их по каждому лифту довольно много, до 4000 доходит у некоторых, многие неинформативны. События с 2014 года. Например, <a href="http://sarov.us.to:9900/lift/events/22">http://sarov.us.to:9900/lift/events/22</a></li>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/events/22/10">http://sarov.us.to:9900/lift/events/{id}/{count}</a> - последние события лифта  с id = {id} в количестве {count}, упорядоченные по дате-времени в обратном порядке.</li>
+		<li><a target="_blank" rel="noopener noreferrer" href="http://sarov.us.to:9900/lift/alert">http://sarov.us.to:9900/lift/alert</a> - список лифтов с появившимися ошибками. Для ситуационного окна.</li>
+	</ul>
+</body>
+</html>

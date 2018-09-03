@@ -5,6 +5,7 @@ import java.util.Properties;
 
 public final class DBProperties {
 	private DBProperties() {
+		//this.getClass().getResourceAsStream("db.properties");
 	}
 
 	public static Properties get() {

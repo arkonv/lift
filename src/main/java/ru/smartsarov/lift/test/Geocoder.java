@@ -45,8 +45,8 @@ public class Geocoder {
 	
     @GET
     @Path("/geo")
-    @Produces(MediaType.APPLICATION_JSON)
-    public static String geocode(@DefaultValue("false") @QueryParam("todb") Boolean toDb, @DefaultValue("false") @QueryParam("tofile") Boolean toFile) throws Exception
+    @Produces(MediaType.TEXT_PLAIN)
+    public static String geocode(@DefaultValue("false") @QueryParam("todb") Boolean toDb, @DefaultValue("false") @QueryParam("tofile") Boolean toFile, @QueryParam("iddisp") Integer idDisp) throws Exception
     {
     	String query =
     			" select " +
@@ -54,7 +54,7 @@ public class Geocoder {
     			"	v_lifts.street || ',' || v_lifts.house || ',' || v_lifts.pod disp_address, " +
     			"	regions.nameregion || ',' || v_lifts.town || ',' || + v_lifts.street || ',' || v_lifts.house || ',' || v_lifts.pod address " +
     			" from v_lifts " +
-    			" join disps on disps.iddisp = v_lifts.iddisp " +
+    			" join disps on disps.iddisp = v_lifts.iddisp " + (idDisp == null ? "" : " and disps.iddisp = " + String.valueOf(idDisp)) +
     			" join regions on regions.idregion = disps.IDREG " +
     			" order by idlift";
 		
